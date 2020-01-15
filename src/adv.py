@@ -41,6 +41,7 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player('PlayerOne', room['outside'])
 
 # Write a loop that:
 #
@@ -55,29 +56,57 @@ room['treasure'].s_to = room['narrow']
 
 
 def main():
+    print_welcome_message()
+    game_action()
+
+
+def game_action():
     print_current_room()
     input_player_movement()
 
 
+def print_welcome_message():
+    welcome_message = '\n** Welcome to Adventure Game! **\n'
+    print(welcome_message)
+
+
 def print_current_room():
-    print('BLAH')
+    print('Your location:', player.current_room.name)
+    print(player.current_room.description, '\n')
 
 
 def input_player_movement():
-    direction = input('Which way would you like to move? [n, s, e, w] ')
+    cardinal_directions = {'n': 'North',
+                           's': 'South',
+                           'e': 'East',
+                           'w': 'West'}
+
+    direction = input(
+        'Which way would you like to move? [n: north, s: south, e: east, w: west, q: quit] ')
 
     if direction == 'q':
         quit_game()
-
-    cardinal_directions = ('n', 's', 'e', 'w')
-    if direction in cardinal_directions:
-        print('COOL.')
+    elif direction in cardinal_directions.keys():
+        print(f'You move {cardinal_directions[direction]}.\n')
+        move_room(direction)
+        game_action()
     else:
-        print('Alas, that movement is not allowed!')
+        print("Pshhh, you fool... that's not a direction!\n")
+        game_action()
+
+
+def move_room(direction):
+    direction_link = {'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to'}
+    new_room = getattr(player.current_room, direction_link[direction])
+
+    if not new_room:
+        print('Alas, you cannot move in that direction!\n')
+    else:
+        player.current_room = new_room
 
 
 def quit_game():
-    print('BYEEEE.')
+    print('\nOk, BYEEEE.')
     sys.exit()
 
 
