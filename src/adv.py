@@ -1,4 +1,7 @@
+import sys
 from room import Room
+from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -49,3 +52,33 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
+def main():
+    print_current_room()
+    input_player_movement()
+
+
+def print_current_room():
+    print('BLAH')
+
+
+def input_player_movement():
+    direction = input('Which way would you like to move? [n, s, e, w] ')
+
+    if direction == 'q':
+        quit_game()
+
+    cardinal_directions = ('n', 's', 'e', 'w')
+    if direction in cardinal_directions:
+        print('COOL.')
+    else:
+        print('Alas, that movement is not allowed!')
+
+
+def quit_game():
+    print('BYEEEE.')
+    sys.exit()
+
+
+main()
