@@ -1,26 +1,26 @@
 from room import Room
 from player import Player
-from item import Item
+from item import Item, LightSource
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", True),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", False),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", False),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", False),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", False),
 }
 
 
@@ -56,9 +56,11 @@ player = Player('PlayerOne', room['outside'])
 item = {'hat': Item('hat', 'a black knit beanie with the word covey and an image of a quail embroidered in white'),
         'takeout': Item('takeout', 'a box of takeout Chinese food from JAN MEIIII'),
         'nungets': Item('nungets', 'a box of CHIMKN NUNGETS'),
-        'quail': Item('quail', 'a mystical creature known for its ability to crush release canvases, be best overall in hackathons, and win Labs')}
+        'quail': Item('quail', 'a mystical creature known for its ability to crush release canvases, be best overall in hackathons, and win Labs'),
+        'flashlight': LightSource('flashlight', 'a regular flashlight')}
 
 room['outside'].items.append(item['hat'])
+room['outside'].items.append(item['flashlight'])
 room['foyer'].items.append(item['takeout'])
 room['overlook'].items.append(item['nungets'])
 room['narrow'].items.append(item['quail'])
@@ -103,6 +105,7 @@ def check_input(input):
         elif key in cardinal_directions.keys():
             print(f'You move {cardinal_directions[key]}.')
             player.move_room(key)
+            player.print_current_room()
             input_player_action()
         else:
             bad_input()
