@@ -53,11 +53,15 @@ player = Player('PlayerOne', room['outside'])
 #
 # If the user enters "q", quit the game.
 
-item = {'sword': Item('sword', 'your standard sword'),
-        'iPhone': Item('iPhone', 'an iPhoneX')}
+item = {'hat': Item('hat', 'a black knit beanie with the word covey and an image of a quail embroidered in white'),
+        'takeout': Item('takeout', 'a box of takeout Chinese food from JAN MEIIII'),
+        'nungets': Item('nungets', 'a box of CHIMKN NUNGETS'),
+        'quail': Item('quail', 'a mystical creature')}
 
-room['outside'].items.append(item['sword'])
-room['outside'].items.append(item['iPhone'])
+room['outside'].items.append(item['hat'])
+room['foyer'].items.append(item['takeout'])
+room['overlook'].items.append(item['nungets'])
+room['narrow'].items.append(item['quail'])
 
 
 def main():
@@ -167,7 +171,7 @@ def get(item_to_get):
     if any(item.name == item_to_get for item in player.current_room.items):
         player.items.append(item[item_to_get])
         player.current_room.items.remove(item[item_to_get])
-        print(f'Sweet! You now has {item_to_get}!')
+        item[item_to_get].on_take()
     else:
         print(
             f"Hmm, doesn't look like there's a {item_to_get} in this room...")
