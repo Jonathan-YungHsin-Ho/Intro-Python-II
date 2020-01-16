@@ -56,7 +56,7 @@ player = Player('PlayerOne', room['outside'])
 item = {'hat': Item('hat', 'a black knit beanie with the word covey and an image of a quail embroidered in white'),
         'takeout': Item('takeout', 'a box of takeout Chinese food from JAN MEIIII'),
         'nungets': Item('nungets', 'a box of CHIMKN NUNGETS'),
-        'quail': Item('quail', 'a mystical creature')}
+        'quail': Item('quail', 'a mystical creature known for its ability to crush release canvases, be best overall in hackathons, and win Labs')}
 
 room['outside'].items.append(item['hat'])
 room['foyer'].items.append(item['takeout'])
@@ -66,11 +66,7 @@ room['narrow'].items.append(item['quail'])
 
 def main():
     print_welcome_message()
-    game_action()
-
-
-def game_action():
-    print_current_room()
+    player.print_current_room()
     input_player_action()
 
 
@@ -79,12 +75,48 @@ def print_welcome_message():
     print(welcome_message)
 
 
-def print_current_room():
-    print('\nYour location:', player.current_room.name)
-    print(player.current_room.description, '\n')
-    for item in player.current_room.items:
-        print(
-            f"There's a {item.name} in this room. It is {item.description}.")
+def input_player_action():
+    input_message = '\nWhat would you like to do? [press o to see your options] '
+    key = input(input_message).split(' ')
+    check_input(key)
+
+
+def check_input(input):
+    if len(input) == 1:
+        key = input[0].lower()
+
+        cardinal_directions = {'n': 'North',
+                               's': 'South',
+                               'e': 'East',
+                               'w': 'West'}
+
+        if key == 'q':
+            quit_game()
+        elif key == 'o':
+            print_options()
+        elif key == 'l':
+            player.print_current_room()
+            input_player_action()
+        elif key == 'i' or key == 'inventory':
+            player.print_inventory()
+            input_player_action()
+        elif key in cardinal_directions.keys():
+            print(f'You move {cardinal_directions[key]}.')
+            player.move_room(key)
+            input_player_action()
+        else:
+            bad_input()
+    elif len(input) == 2:
+        if input[0] == 'get' or input[0] == 'take':
+            player.get(input[1], item)
+            input_player_action()
+        elif input[0] == 'drop':
+            player.drop(input[1], item)
+            input_player_action()
+        else:
+            bad_input()
+    else:
+        bad_input()
 
 
 def print_options():
@@ -100,91 +132,8 @@ def print_options():
     input_player_action()
 
 
-def input_player_action():
-    input_message = '\nWhat would you like to do? [press o to see your options] '
-
-    key = input(input_message).split(' ')
-    check_input(key)
-
-
-def check_input(input):
-    if len(input) == 1:
-        key = input[0]
-
-        cardinal_directions = {'n': 'North',
-                               's': 'South',
-                               'e': 'East',
-                               'w': 'West'}
-
-        if key == 'q':
-            quit_game()
-        elif key == 'o':
-            print_options()
-        elif key == 'l':
-            game_action()
-        elif key == 'i' or key == 'inventory':
-            print_inventory()
-            input_player_action()
-        elif key in cardinal_directions.keys():
-            print(f'You move {cardinal_directions[key]}.')
-            move_room(key)
-            game_action()
-        else:
-            bad_input()
-    elif len(input) == 2:
-        if input[0] == 'get' or input[0] == 'take':
-            get(input[1])
-        elif input[0] == 'drop':
-            drop(input[1])
-        else:
-            bad_input()
-    else:
-        bad_input()
-
-
 def bad_input():
     print("Eww gross, you can't do that in here!")
-    input_player_action()
-
-
-def move_room(direction):
-    direction_link = {'n': 'n_to', 's': 's_to', 'e': 'e_to', 'w': 'w_to'}
-    new_room = getattr(player.current_room, direction_link[direction])
-
-    if not new_room:
-        print('Alas, you cannot move in that direction!\n')
-    else:
-        player.current_room = new_room
-
-
-def print_inventory():
-    if not len(player.items):
-        print('\nYour satchel is empty.\n')
-    else:
-        print('In your satchel:')
-        for item in player.items:
-            print(f'{item.name}: {item.description}')
-        print('\n')
-
-
-def get(item_to_get):
-    if any(item.name == item_to_get for item in player.current_room.items):
-        player.items.append(item[item_to_get])
-        player.current_room.items.remove(item[item_to_get])
-        item[item_to_get].on_take()
-    else:
-        print(
-            f"Hmm, doesn't look like there's a {item_to_get} in this room...")
-    input_player_action()
-
-
-def drop(item_to_drop):
-    if any(item.name == item_to_drop for item in player.items):
-        player.items.remove(item[item_to_drop])
-        player.current_room.items.append(item[item_to_drop])
-        print(f'You drop the {item_to_drop} to the floor.')
-    else:
-        print(f"Pshh you don't even have a {item_to_drop}!")
     input_player_action()
 
 
