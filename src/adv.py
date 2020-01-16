@@ -107,8 +107,9 @@ def check_input(input):
         else:
             bad_input()
     elif len(input) == 2:
-        action = input[0]
-        obj = input[1]
+        action = input[0].lower()
+        obj = input[1].lower()
+
         if action == 'get' or action == 'take':
             player.get(obj)
             input_player_action()
