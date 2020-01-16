@@ -13,6 +13,11 @@ class Item:
         print(f'\nYou have dropped the {self.name}!')
 
 
+class Treasure(Item):
+    def __init__(self, name, description):
+        super().__init__(name, description)
+
+
 class LightSource(Item):
     def __init__(self, name, description):
         super().__init__(name, description)

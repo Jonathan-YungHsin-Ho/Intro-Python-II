@@ -66,6 +66,9 @@ room['overlook'].items.append(item['nungets'])
 room['narrow'].items.append(item['quail'])
 
 
+last_item = ''
+
+
 def main():
     print_welcome_message()
     player.print_current_room()
@@ -112,6 +115,10 @@ def check_input(input):
     elif len(input) == 2:
         action = input[0].lower()
         obj = input[1].lower()
+        global last_item
+        if obj == 'it':
+            obj = last_item
+        last_item = obj
 
         if action == 'get' or action == 'take':
             player.get(obj)
