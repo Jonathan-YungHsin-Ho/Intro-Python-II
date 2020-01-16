@@ -69,6 +69,30 @@ room['narrow'].items.append(item['quail'])
 last_item = ''
 
 
+def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
+
+
+def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
+
+
+def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
+
+
+def prLightPurple(skk): print("\033[94m {}\033[00m" .format(skk))
+
+
+def prPurple(skk): print("\033[95m {}\033[00m" .format(skk))
+
+
+def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
+
+
+def prLightGray(skk): print("\033[97m {}\033[00m" .format(skk))
+
+
+def prBlack(skk): print("\033[98m {}\033[00m" .format(skk))
+
+
 def main():
     print_welcome_message()
     player.print_current_room()
@@ -77,7 +101,7 @@ def main():
 
 def print_welcome_message():
     welcome_message = '\n** Welcome to Adventure Game! **'
-    print(welcome_message)
+    prPurple(welcome_message)
 
 
 def input_player_action():
@@ -106,7 +130,7 @@ def check_input(input):
             player.print_inventory()
             input_player_action()
         elif key in cardinal_directions.keys():
-            print(f'You move {cardinal_directions[key]}.')
+            prGreen(f'You move {cardinal_directions[key]}.')
             player.move_room(key)
             player.print_current_room()
             input_player_action()
@@ -133,15 +157,15 @@ def check_input(input):
 
 
 def print_options():
-    print('n: go North')
-    print('s: go South')
-    print('e: go East')
-    print('w: go West')
-    print('l: check location')
-    print('i: check inventory')
-    print('get/take [item]: pick up item')
-    print('drop [item]: drop item')
-    print('q: quit game')
+    prCyan('n: go North')
+    prCyan('s: go South')
+    prCyan('e: go East')
+    prCyan('w: go West')
+    prCyan('l: check location')
+    prCyan('i: check inventory')
+    prCyan('get/take [item]: pick up item')
+    prCyan('drop [item]: drop item')
+    prCyan('q: quit game')
     input_player_action()
 
 
@@ -151,7 +175,7 @@ def bad_input():
 
 
 def quit_game():
-    print('\nWhat? Leaving so soon? Ok fine, BYEEEE.')
+    prPurple('\nWhat? Leaving so soon? Ok fine, BYEEEE.')
 
 
 main()
