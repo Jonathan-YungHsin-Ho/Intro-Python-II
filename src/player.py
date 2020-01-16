@@ -10,22 +10,7 @@ def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
 def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
 
 
-def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
-
-
 def prLightPurple(skk): print("\033[94m {}\033[00m" .format(skk))
-
-
-def prPurple(skk): print("\033[95m {}\033[00m" .format(skk))
-
-
-def prCyan(skk): print("\033[96m {}\033[00m" .format(skk))
-
-
-def prLightGray(skk): print("\033[97m {}\033[00m" .format(skk))
-
-
-def prBlack(skk): print("\033[98m {}\033[00m" .format(skk))
 
 
 class Player:
@@ -67,10 +52,10 @@ class Player:
                 self.current_room.items.remove(item_obj)
                 item_obj.on_take()
             else:
-                prLightPurple(
+                prRed(
                     f"Hmm, doesn't look like there's a {item_to_get} in this room...")
         else:
-            print('Good luck finding that in the dark!')
+            prRed('Good luck finding that in the dark!')
 
     def drop(self, item_to_drop):
         if any(item.name == item_to_drop for item in self.items):
@@ -80,7 +65,7 @@ class Player:
             self.current_room.items.append(item_obj)
             item_obj.on_drop()
         else:
-            print(f"Pshh you don't even have a {item_to_drop}!")
+            prGreen(f"Pshh you don't even have a {item_to_drop}!")
 
     def has_light(self):
         return any(isinstance(item, LightSource) for item in self.items)
