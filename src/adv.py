@@ -133,7 +133,7 @@ def print_options():
 
 
 def bad_input():
-    print("Eww gross, you can't do that in here!")
+    print("\nEww gross, you can't do that in here!")
     input_player_action()
 
 

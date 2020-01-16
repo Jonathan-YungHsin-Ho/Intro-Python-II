@@ -9,11 +9,8 @@ class Player:
         self.items = []
 
     def print_current_room(self):
-        print('\nYour location:', self.current_room.name)
-        print(self.current_room.description, '\n')
-        for item in self.current_room.items:
-            print(
-                f"There's a {item.name} in this room. It is {item.description}.")
+        print(self.current_room)
+        self.current_room.print_items()
 
     def print_inventory(self):
         if not len(self.items):
@@ -21,7 +18,7 @@ class Player:
         else:
             print('\nIn your satchel:')
             for item in self.items:
-                print(f'{item.name}: {item.description}')
+                print(item)
 
     def move_room(self, direction):
         new_room = getattr(self.current_room, f'{direction}_to')
@@ -44,6 +41,6 @@ class Player:
         if any(item.name == item_to_drop for item in self.items):
             self.items.remove(item_list[item_to_drop])
             self.current_room.items.append(item_list[item_to_drop])
-            print(f'You drop the {item_to_drop} to the floor.')
+            item_list[item_to_drop].on_drop()
         else:
             print(f"Pshh you don't even have a {item_to_drop}!")

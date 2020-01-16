@@ -11,3 +11,11 @@ class Room:
         self.e_to = None
         self.w_to = None
         self.items = []
+
+    def __str__(self):
+        return f'\n{self.name}\n{self.description}\n'
+
+    def print_items(self):
+        for item in self.items:
+            print(
+                f"There's a {item.name} in this room. It is {item.description}.")
