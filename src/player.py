@@ -28,19 +28,23 @@ class Player:
             self.current_room = new_room
             self.print_current_room()
 
-    def get(self, item_to_get, item_list):
+    def get(self, item_to_get):
         if any(item.name == item_to_get for item in self.current_room.items):
-            self.items.append(item_list[item_to_get])
-            self.current_room.items.remove(item_list[item_to_get])
-            item_list[item_to_get].on_take()
+            item_obj = next(
+                (item for item in self.current_room.items if item.name == item_to_get), None)
+            self.items.append(item_obj)
+            self.current_room.items.remove(item_obj)
+            item_obj.on_take()
         else:
             print(
                 f"Hmm, doesn't look like there's a {item_to_get} in this room...")
 
-    def drop(self, item_to_drop, item_list):
+    def drop(self, item_to_drop):
         if any(item.name == item_to_drop for item in self.items):
-            self.items.remove(item_list[item_to_drop])
-            self.current_room.items.append(item_list[item_to_drop])
-            item_list[item_to_drop].on_drop()
+            item_obj = next(
+                (item for item in self.items if item.name == item_to_drop), None)
+            self.items.remove(item_obj)
+            self.current_room.items.append(item_obj)
+            item_obj.on_drop()
         else:
             print(f"Pshh you don't even have a {item_to_drop}!")

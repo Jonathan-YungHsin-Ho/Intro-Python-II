@@ -107,11 +107,13 @@ def check_input(input):
         else:
             bad_input()
     elif len(input) == 2:
-        if input[0] == 'get' or input[0] == 'take':
-            player.get(input[1], item)
+        action = input[0]
+        obj = input[1]
+        if action == 'get' or action == 'take':
+            player.get(obj)
             input_player_action()
-        elif input[0] == 'drop':
-            player.drop(input[1], item)
+        elif action == 'drop':
+            player.drop(obj)
             input_player_action()
         else:
             bad_input()
